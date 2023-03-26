@@ -3,7 +3,6 @@ package http
 import (
 	"encoding/json"
 	"fmt"
-	"io"
 	"net/http"
 )
 
@@ -13,7 +12,7 @@ var users = map[string]string{
 	"user2": "password2",
 }
 
-func Login(w http.ResponseWriter, r *http.Request) {
+func SignIn(w http.ResponseWriter, r *http.Request) {
 	var creds Credentials
 	// decode creds json
 	err := json.NewDecoder(r.Body).Decode(&creds)
@@ -44,5 +43,4 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		Expires: expirationTime,
 	})
 	fmt.Printf("/login")
-	io.WriteString(w, "/login")
 }

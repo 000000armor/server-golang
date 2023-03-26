@@ -18,7 +18,8 @@ func New(port string) *Adapter {
 func (a *Adapter) Run() error {
 	PORT := fmt.Sprintf(":%s", a.port)
 
-	http.HandleFunc("/login", Login)
+	http.HandleFunc("/signin", SignIn)
+	http.HandleFunc("/signup", SignUp)
 	http.HandleFunc("/verify", Verify)
 	http.HandleFunc("/logout", Logout)
 
