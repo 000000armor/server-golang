@@ -13,6 +13,8 @@ var users = map[string]string{
 }
 
 func SignIn(w http.ResponseWriter, r *http.Request) {
+	username, password, ok := r.BasicAuth()
+
 	var creds Credentials
 	// decode creds json
 	err := json.NewDecoder(r.Body).Decode(&creds)
@@ -23,10 +25,10 @@ func SignIn(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// check is user is there or no
-	password, ok := users[creds.Username]
+	passwordLocal, ok := users[username]
 
 	// return Unauthorized code if user is not found or password not valid
-	if !ok || password != creds.Password {
+	if !ok || passwordLocal != password {
 		w.WriteHeader(http.StatusUnauthorized)
 		return
 	}
