@@ -2,12 +2,12 @@ package http
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
+	"server/domain/auth"
 )
 
 func SignUp(w http.ResponseWriter, r *http.Request) {
-	var creds Credentials
+	var creds auth.Credentials
 	err := json.NewDecoder(r.Body).Decode(&creds)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
@@ -18,6 +18,5 @@ func SignUp(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
-	users[creds.Username] = creds.Password
-	fmt.Println(users)
+
 }

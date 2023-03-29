@@ -1,8 +1,7 @@
-package http
+package auth
 
 import (
 	"github.com/golang-jwt/jwt/v4"
-	"net/http"
 	"time"
 )
 
@@ -21,7 +20,7 @@ type Claims struct {
 	jwt.RegisteredClaims
 }
 
-func GenerateToken(creds *Credentials) (token string, expirationTime time.Time, errorCode int) {
+func GenerateToken(creds *Credentials) (token string, expirationTime time.Time, errGenerateToken error) {
 	// generate expiration time
 	expirationTime = time.Now().Add(time.Minute * 5)
 
@@ -40,7 +39,7 @@ func GenerateToken(creds *Credentials) (token string, expirationTime time.Time, 
 	token = tokenString
 
 	if err != nil {
-		errorCode = http.StatusInternalServerError
+		errGenerateToken = err
 		return
 	}
 

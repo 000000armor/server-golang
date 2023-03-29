@@ -5,8 +5,11 @@ import (
 	"github.com/golang-jwt/jwt/v4"
 	"io"
 	"net/http"
+	"server/domain/auth"
 	"time"
 )
+
+var jwtKey = []byte("my_secret_key")
 
 func Verify(w http.ResponseWriter, r *http.Request) {
 	//token, expirationTime, errorCode := GenerateToken(r.Body)
@@ -22,7 +25,7 @@ func Verify(w http.ResponseWriter, r *http.Request) {
 	}
 
 	tokenStr := c.Value
-	claims := &Claims{}
+	claims := &auth.Claims{}
 	tokenToValidate, err := jwt.ParseWithClaims(tokenStr, claims, func(token *jwt.Token) (interface{}, error) {
 		return jwtKey, nil
 	})
