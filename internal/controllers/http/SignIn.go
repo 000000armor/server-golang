@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"server/domain/auth"
 	"server/storage"
+	"sync"
 )
 
 var userMock = map[string]string{
@@ -12,9 +13,13 @@ var userMock = map[string]string{
 	"password": "password1",
 }
 
+var mu sync.Mutex
+
 func SignIn(w http.ResponseWriter, r *http.Request) {
 	var creds auth.Credentials
 	// create instance of local DB
+	mu.Lock()
+	defer mu.Unlock()
 	mydb := storage.NewMapDb()
 
 	// set current creds from response
