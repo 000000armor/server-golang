@@ -33,7 +33,7 @@ func SignIn(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	mydb.Set(userMock["username		"], passwordHash)
+	mydb.Set(userMock["username"], passwordHash)
 
 	hashedPassword, ok := mydb.Get(creds.Username).([]byte)
 
